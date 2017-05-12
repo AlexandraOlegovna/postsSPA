@@ -11,7 +11,13 @@
 
 <script>
   export default {
-    name: 'app'
+    name: 'app',
+    data: () => ({
+      user: {
+        id: true,
+        like: true
+      }
+    })
   }
 </script>
 
@@ -46,5 +52,6 @@
     font-size: 17px;
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     color: #42b983;
+    cursor: pointer;
   }
 </style>

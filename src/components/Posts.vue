@@ -4,11 +4,10 @@
     <div v-for="number in [currentSlide]" class="suggestion">
       <h1> {{suggestions[number].title}}</h1>
       <p> {{suggestions[number].post}} </p>
-      <p> You should sign in to vote</p>
-      <div>
-        👍 10  👎 20
+      <p v-if="!auth"> You should sign in to vote</p>
+      <div v-else>
+        <a @click="like" :class="{has_like}">❤</a>
       </div>
-
       <div class="arrows">
         <div @click="prev" > ← </div>
         <div @click="next"> → </div>
@@ -19,11 +18,24 @@
 </template>
 
 <script>
-
+import App from '../App.vue';
 
 export default {
   name: 'posts',
+  component:{
+    App
+  },
+  computed: {
+    auth(){
+      return this.$parent.user.id
+    },
+    has_like(){
+      return this.$parent.user.like
+    }
+
+  },
   data: () => ({
+    // test: this.$parent.ok,
     currentSlide: 0,
     suggestions: [{
       title: "Котики 🐱",
@@ -43,6 +55,10 @@ export default {
       },
       prev: function () {
         this.currentSlide = Math.abs(this.currentSlide - 1 + this.suggestions.length) % this.suggestions.length
+      },
+      like: function () {
+        console.log("like")
+        this.$parent.user.like = !this.$parent.user.like
       }
   }
 }
@@ -86,8 +102,14 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-
-a {
-  color: #42b983;
+a{
+  color: black;
+  font-size: 50px;
+  user-select: none;
 }
+
+a.has_like{
+  color: red;
+}
+
 </style>
