@@ -5,7 +5,14 @@ import App from './App.vue'
 
 Vue.use(VueRouter)
 import Home from './components/Home.vue'
-import About from './components/About.vue'
+import Posts from './components/Posts.vue'
+import SignIn from './components/SignIn.vue'
+
+const routes = [
+  { path: '/', component: Home},
+  { path: '/posts', component: Posts},
+  { path: '/signin', component: SignIn }
+]
 
 
 var router = new VueRouter({
@@ -16,10 +23,6 @@ var router = new VueRouter({
 new Vue({
   el: '#app',
   router: router,
-  components: {
-        Home,
-        About
-  },
   data: {
     currentRoute: window.location.pathname
   },

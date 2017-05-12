@@ -1,0 +1,93 @@
+<template>
+  <div id="posts">
+
+    <div v-for="number in [currentSlide]" class="suggestion">
+      <h1> {{suggestions[number].title}}</h1>
+      <p> {{suggestions[number].post}} </p>
+      <p> You should sign in to vote</p>
+      <div>
+        👍 10  👎 20
+      </div>
+
+      <div class="arrows">
+        <div @click="prev" > ← </div>
+        <div @click="next"> → </div>
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<script>
+
+
+export default {
+  name: 'posts',
+  data: () => ({
+    currentSlide: 0,
+    suggestions: [{
+      title: "Котики 🐱",
+      post: "Котики очень милые. Их нужно любить и гладить. "},{
+      title: "Осьминожки 🐙",
+      post: "Осьминоги тоже очень хорошие. Их тоже нужно любить, но гладить не стоит."},{
+      title: "Слоныыыыы 🐘",
+      post: "Слоны большие и сильные."},{
+      title: "Мысли вслух 💬",
+      post: "А вообще такой сайт можно было бы использовать для чего-то важного. Например, ты выдвигаешь свои идеи или предложения, а остальные оценивают её. Этакие полезные инициативы."
+      }
+    ]
+  }),
+  methods: {
+      next: function () {
+        this.currentSlide = Math.abs(this.currentSlide + 1) % this.suggestions.length
+      },
+      prev: function () {
+        this.currentSlide = Math.abs(this.currentSlide - 1 + this.suggestions.length) % this.suggestions.length
+      }
+  }
+}
+</script>
+
+<style scoped>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+.arrows {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.arrows div{
+  cursor: pointer;
+}
+
+.suggestion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 50vw;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+a {
+  color: #42b983;
+}
+</style>
