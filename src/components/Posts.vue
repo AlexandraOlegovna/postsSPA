@@ -4,10 +4,12 @@
     <div v-for="number in [currentSlide]" class="suggestion">
       <h1> {{suggestions[number].title}}</h1>
       <p> {{suggestions[number].post}} </p>
-      <p v-if="!auth"> You should sign in to vote</p>
+      <div v-if="!auth">
+        <p class="subs">Ты не можешь пока оценить этот пост. Залогинься пожалуйста</p>
+      </div>
       <div v-else>
         <a @click="like" :class="{has_like}">❤</a>
-        <p>{{suggestions[number].total}}</p>
+        <p class="subs"> {{suggestions[number].total}}</p>
       </div>
       <div class="arrows">
         <div @click="prev" > ← </div>
@@ -24,7 +26,7 @@ export default {
   name: 'posts',
   computed: {
     auth(){
-      return this.$parent.user.id
+      return this.$parent.user !== null
     },
     has_like(){
       return this.$parent.user.likes.indexOf(this.currentSlide) != -1
@@ -44,7 +46,7 @@ export default {
       post: "Слоны большие и сильные.",
       total: 100},{
       title: "Мысли вслух 💬",
-      post: "А вообще такой сайт можно было бы использовать для чего-то важного. Например, ты выдвигаешь свои идеи или предложения, а остальные оценивают её. Этакие полезные инициативы.",
+      post: "А вообще такой сайт можно было бы использовать для чего-то важного. Например, ты выдвигаешь свои идеи или предложения, а остальные оценивают их. Этакие полезные инициативы.",
       total: 1}
     ]
   }),
@@ -89,6 +91,10 @@ export default {
   width: 50vw;
 }
 
+.subs{
+  font-size: 15px;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -99,13 +105,13 @@ li {
   margin: 0 10px;
 }
 a{
-  color: black;
+  color: #2c3e50;
   font-size: 50px;
   user-select: none;
 }
 
 a.has_like{
-  color: red;
+  color: #ec6868;
 }
 
 </style>

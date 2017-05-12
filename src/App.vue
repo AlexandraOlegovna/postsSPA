@@ -3,7 +3,8 @@
     <ul>
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/posts">Posts</router-link></li>
-        <li><router-link to="/signin">Sign In</router-link></li>
+        <li v-if="!auth"><router-link to="/signin">Sign In</router-link></li>
+        <li v-else><router-link to="/signin">Sign Out</router-link></li>
     </ul>
     <router-view></router-view>
   </div>
@@ -14,11 +15,14 @@
 
   export default {
     name: 'app',
+    computed: {
+      auth(){
+        return this.user !== null
+      }
+    },
     data: () => ({
-      user: {
-        id: "111",
-        likes: [2,3]
-      }, users
+      user: null,
+      users
     })
   }
 </script>
@@ -36,6 +40,7 @@
     width: 50%;
     font-size: 20px;
     line-height: 30px;
+    cursor: default;
   }
 
   h1{
@@ -53,7 +58,7 @@
   a {
     font-size: 17px;
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    color: #42b983;
+    color: #4b72a7;
     cursor: pointer;
   }
 </style>
