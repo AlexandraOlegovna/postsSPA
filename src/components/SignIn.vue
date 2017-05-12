@@ -1,7 +1,7 @@
 <template>
     <div id="signin">
       <div v-if="!auth">
-        <p>Nы можешь залогиниться через </p>
+        <p>Ты можешь залогиниться через </p>
         <a @click="signin_vk"><img src="../assets/vk.png"></a>
       </div>
       <div v-else>
@@ -30,23 +30,27 @@
       signin_vk: function(){
         let users = this.$parent.users;
         self = this;
-        VK.Auth.login(function(response) {
-        if (response.session) {
-          let id = response.session.user.id;
-          let username = response.session.user.first_name;
-          let cur_user = {
-              username: username,
-              likes: []
-          }
-          if (users[id] == null)
-            users[id] = cur_user
-          self.$parent.user = users[id]}}, null)
+          VK.Auth.login(function(response) {
+          if (response.session) {
+            let id = response.session.user.id;
+            let username = response.session.user.first_name;
+            let cur_user = {
+                username: username,
+                likes: []
+            }
+            if (users[id] == null)
+              users[id] = cur_user
+            self.$parent.user = users[id]}
+            localStorage.setItem('user', JSON.stringify(self.$parent.user))
+          }, null);
       },
       signout_vk: function(){
         self = this;
-        VK.Auth.logout(() => {
-          self.$parent.user = null
-        })
+        VK.Auth.logout()
+        self.$parent.user = null
+        localStorage.setItem('user', null)
+        // let l = localStorage.getItem('user')
+        // console.log(l)
       }
     }
   }

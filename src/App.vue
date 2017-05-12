@@ -23,7 +23,16 @@
     data: () => ({
       user: null,
       users
-    })
+    }),
+    created: function(){
+      this.load_user();
+    },
+    methods: {
+      load_user: function(){
+        // console.log("s");
+        this.user = JSON.parse(localStorage.getItem('user'));
+      }
+    }
   }
 </script>
 
