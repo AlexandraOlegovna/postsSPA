@@ -2,7 +2,7 @@
     <div id="signin">
       <div v-if="!auth">
         <p>Ты можешь залогиниться через </p>
-        <a @click="signin_vk"><img src="../assets/vk.png"></a>
+        <a @click="signin_vk"><img src="https://avatanplus.com/files/resources/mid/57d993e5eb5e515729e9ba4c.png"></a>
       </div>
       <div v-else>
         <p>Привет, {{username}}. Теперь ты можешь оценивать посты :) </p>
