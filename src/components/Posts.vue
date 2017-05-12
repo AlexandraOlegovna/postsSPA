@@ -7,6 +7,7 @@
       <p v-if="!auth"> You should sign in to vote</p>
       <div v-else>
         <a @click="like" :class="{has_like}">❤</a>
+        <p>{{suggestions[number].total}}</p>
       </div>
       <div class="arrows">
         <div @click="prev" > ← </div>
@@ -18,35 +19,33 @@
 </template>
 
 <script>
-import App from '../App.vue';
 
 export default {
   name: 'posts',
-  component:{
-    App
-  },
   computed: {
     auth(){
       return this.$parent.user.id
     },
     has_like(){
-      return this.$parent.user.like
+      return this.$parent.user.likes.indexOf(this.currentSlide) != -1
     }
 
   },
   data: () => ({
-    // test: this.$parent.ok,
     currentSlide: 0,
     suggestions: [{
       title: "Котики 🐱",
-      post: "Котики очень милые. Их нужно любить и гладить. "},{
+      post: "Котики очень милые. Их нужно любить и гладить. ",
+      total: 10},{
       title: "Осьминожки 🐙",
-      post: "Осьминоги тоже очень хорошие. Их тоже нужно любить, но гладить не стоит."},{
+      post: "Осьминоги тоже очень хорошие. Их тоже нужно любить, но гладить не стоит.",
+      total: 20},{
       title: "Слоныыыыы 🐘",
-      post: "Слоны большие и сильные."},{
+      post: "Слоны большие и сильные.",
+      total: 100},{
       title: "Мысли вслух 💬",
-      post: "А вообще такой сайт можно было бы использовать для чего-то важного. Например, ты выдвигаешь свои идеи или предложения, а остальные оценивают её. Этакие полезные инициативы."
-      }
+      post: "А вообще такой сайт можно было бы использовать для чего-то важного. Например, ты выдвигаешь свои идеи или предложения, а остальные оценивают её. Этакие полезные инициативы.",
+      total: 1}
     ]
   }),
   methods: {
@@ -57,22 +56,19 @@ export default {
         this.currentSlide = Math.abs(this.currentSlide - 1 + this.suggestions.length) % this.suggestions.length
       },
       like: function () {
-        console.log("like")
-        this.$parent.user.like = !this.$parent.user.like
+        let likes = this.$parent.user.likes;
+        let is_liked = likes.indexOf(this.currentSlide)
+        if (is_liked == -1)
+          likes.push(this.currentSlide);
+        else
+          likes.splice(is_liked, 1);
+        this.suggestions[this.currentSlide].total += (is_liked == -1) ? 1 : -1
       }
   }
 }
 </script>
 
 <style scoped>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 .arrows {
   width: 100%;
   display: flex;

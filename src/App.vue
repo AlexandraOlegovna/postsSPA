@@ -10,13 +10,15 @@
 </template>
 
 <script>
+  import users from './userDB.js'
+
   export default {
     name: 'app',
     data: () => ({
       user: {
-        id: true,
-        like: true
-      }
+        id: "111",
+        likes: [2,3]
+      }, users
     })
   }
 </script>
